@@ -14,7 +14,6 @@ def get_indices_for_numbers(single_digit_group):
     return list(range(start_index, start_index + len(str(number))+2))
 
 
-input_string = "abc*def#ghi$"
 special_chars = "*#$+@/%-&="
 
 previous_special_char_indexes = []
@@ -43,7 +42,6 @@ with open("input", "r") as file:
         # validate this line with previous symbols
         if numbers and previous_special_char_indexes:
             for n in numbers:
-                print(get_indices_for_numbers(n))
                 if set(previous_special_char_indexes).intersection(set(get_indices_for_numbers(n))):
                     parts.append(n[0])
 
