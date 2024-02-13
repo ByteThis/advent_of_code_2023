@@ -1,4 +1,7 @@
+import math
 from itertools import cycle
+
+starting_nodes = []
 
 class TreeNode:
     def __init__(self, value):
@@ -12,6 +15,10 @@ def build_tree(input_string):
     for x in input_string:
         node_name, children_str = x.split(' = ')
         node_name = node_name.strip()
+
+        if node_name[-1] == 'A':
+            starting_nodes.append(node_name)
+
         children_str = children_str.strip()[1:-1]
 
         # Create the node if not exists
@@ -31,20 +38,24 @@ def build_tree(input_string):
     return node_map
 
 
-
-file = open("input_1").read().strip().split("\n\n")
-transverse_pattern = cycle(file[0])
+file = open("input_2").read().strip().split("\n\n")
+transverse_pattern = file[0]
 tree_structure = file[1].split('\n')
 
 nodes_transversed = 0
-current_node = build_tree(tree_structure)['AAA']
-while current_node.value != 'ZZZ':
-    d = next(transverse_pattern)
-    if d == 'R':
-        current_node=current_node.right
-    else:
-        current_node = current_node.left
+tree = build_tree(tree_structure)
 
-    nodes_transversed += 1
+current_nodes = [tree[x] for x in starting_nodes]
 
-print(nodes_transversed)
+def solve(node, i=0):
+    while not node.value.endswith('Z'):
+        d = transverse_pattern[i % len(transverse_pattern)]
+        if d == 'R':
+            node = node.right
+        else:
+            node = node.left
+        i += 1
+    return i
+
+res = math.lcm(*map(solve, current_nodes))
+print(res)
