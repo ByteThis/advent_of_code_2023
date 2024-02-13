@@ -28,9 +28,7 @@ def build_tree(input_string):
         node_map[node_name].left = node_map[children_names[0]]
         node_map[node_name].right = node_map[children_names[1]]
 
-
     return node_map
-
 
 
 
@@ -49,7 +47,4 @@ while current_node.value != 'ZZZ':
 
     nodes_transversed += 1
 
-
 print(nodes_transversed)
-
-
